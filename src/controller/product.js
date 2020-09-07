@@ -12,28 +12,31 @@ Product.all = async (req, res) => {
 }
 
 Product.add = (req, res) => {
-    const { name, price, category } = req.body
-    const data = model.Add(name, price, category)
+    console.log(req.body)
+    const { name, price, category, image } = req.body
+    
+    const data = model.Add(name, price, category, image)
     return res.send(data)
 }
 
 Product.edit = (req, res) => {
-    const { id, name, price, category } = req.body
+    const { id, name, price, category, image } = req.body
     console.log(category)
     let id_category = 0
     category == 'drink' ? id_category = 1 : 
     category == 'cake' ? id_category = 2 :
     category == 'food' ? id_category = 3 : id_category = 0 
     
-    const data = model.Edit(id, name, price, id_category)
+    const data = model.Edit(id, name, price, id_category, image)
     
     return res.send(data)
 }
 
 Product.delete = (req, res) => {
     const { id } = req.body
-    const data = model.Delete(id)
-    return res.send(data)
+    console.log(req.body)
+    //const data = model.Delete(id)
+    //return res.send(data)
 }
 
 Product.search = async (req, res) => {

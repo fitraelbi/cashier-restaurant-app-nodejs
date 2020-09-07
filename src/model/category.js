@@ -15,6 +15,7 @@ category.GetAll = () => {
 }
 
 category.Add = (name) => {
+    console.log(name)
     database
         .query(`INSERT INTO category (name) VALUES ('${name}')`)
         .then((res) => {

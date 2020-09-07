@@ -1,4 +1,0 @@
-select document_id, header_text, to_char(posting_date, 'dd mon yyyy') as created_date
-from documents;
-
-INSERT INTO history (invoices, cashier, date, orders, total) VALUES ('10928', 'Cashier 1', current_timestamp, 'Ice Tea, Salad', 120000);

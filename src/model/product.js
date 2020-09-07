@@ -4,7 +4,7 @@ const Product = {}
 Product.GetAll = () => {
     return new Promise((resolve, reject) => {
         database
-            .query("SELECT	product.id, product.name, product.price, category.name AS category FROM product INNER JOIN category ON product.id_category = category.id ORDER BY id ASC;")
+            .query("SELECT	product.id, product.name, product.price, category.name AS category, product.image FROM product INNER JOIN category ON product.id_category = category.id ORDER BY id ASC;")
             .then((res) => {
                 resolve(res.rows)
             })
@@ -14,16 +14,14 @@ Product.GetAll = () => {
     })
 }
 
-Product.Add = (name, price, category) => {
+Product.Add = (name, price, category, image) => {
     let id_category = 0
     category == 'drink' ? id_category = 1 : 
     category == 'cake' ? id_category = 2 :
     category == 'food' ? id_category = 3 : id_category = 0  
-    
-    console.log(id_category)
 
     database
-        .query(`INSERT INTO product (name, price, id_category) VALUES ('${name}', ${price}, ${id_category})`)
+        .query(`INSERT INTO product (name, price, id_category, image) VALUES ('${name}', ${price}, ${id_category}, '${image}')`)
         .then((res) => {
             return "Data berhasil ditambahkan"
         })
@@ -32,10 +30,10 @@ Product.Add = (name, price, category) => {
         })
 }
 
-Product.Edit = (id, name, price, id_category) => {
+Product.Edit = (id, name, price, id_category, image) => {
     database
         .query(
-            `UPDATE product SET name='${name}', price='${price}', id_category='${id_category}' WHERE id=${id};`)
+            `UPDATE product SET name='${name}', price='${price}', id_category='${id_category}', image='${image}' WHERE id=${id};`)
         .then((res) => {
             console.log(res)
             return "Data berhasil di update"
@@ -63,7 +61,7 @@ Product.Delete = (id) => {
 Product.Search = (name) => {
     return new Promise((resolve, reject) => {
         database
-            .query(`SELECT	product.id, product.name, product.price, category.name AS category FROM product INNER JOIN category ON product.id_category = category.id WHERE product.name ILIKE '%${name}%';`)
+            .query(`SELECT	product.id, product.name, product.price, category.name AS category, product.image  FROM product INNER JOIN category ON product.id_category = category.id WHERE product.name ILIKE '%${name}%';`)
             .then((res) => {
                 resolve(res.rows)
             })
@@ -76,7 +74,7 @@ Product.Search = (name) => {
 Product.ByName = () => {
     return new Promise((resolve, reject) => {
         database
-            .query(`SELECT	product.id, product.name, product.price, category.name AS category FROM product INNER JOIN category ON product.id_category = category.id ORDER BY product.name ASC;`)
+            .query(`SELECT	product.id, product.name, product.price, category.name AS category, product.image  FROM product INNER JOIN category ON product.id_category = category.id ORDER BY product.name ASC;`)
             .then((res) => {
                 resolve(res.rows)
             })
@@ -89,7 +87,7 @@ Product.ByName = () => {
 Product.ByCategory = () => {
     return new Promise((resolve, reject) => {
         database
-            .query(`SELECT product.id, product.name, product.price, category.name AS category FROM product INNER JOIN category ON product.id_category = category.id ORDER BY category.id ASC;`)
+            .query(`SELECT product.id, product.name, product.price, category.name AS category, product.image  FROM product INNER JOIN category ON product.id_category = category.id ORDER BY category.id ASC;`)
             .then((res) => {
                 resolve(res.rows)
             })
@@ -102,7 +100,7 @@ Product.ByCategory = () => {
 Product.ByNew = () => {
     return new Promise((resolve, reject) => {
         database
-            .query(`SELECT product.id, product.name, product.price, category.name AS category FROM product INNER JOIN category ON product.id_category = category.id ORDER BY product.id DESC;`)
+            .query(`SELECT product.id, product.name, product.price, category.name AS category, product.image  FROM product INNER JOIN category ON product.id_category = category.id ORDER BY product.id DESC;`)
             .then((res) => {
                 resolve(res.rows)
             })
@@ -115,7 +113,7 @@ Product.ByNew = () => {
 Product.ByPrice = () => {
     return new Promise((resolve, reject) => {
         database
-            .query(`SELECT product.id, product.name, product.price, category.name AS category FROM product INNER JOIN category ON product.id_category = category.id ORDER BY product.price ASC;`)
+            .query(`SELECT product.id, product.name, product.price, category.name AS category, product.image  FROM product INNER JOIN category ON product.id_category = category.id ORDER BY product.price ASC;`)
             .then((res) => {
                 resolve(res.rows)
             })

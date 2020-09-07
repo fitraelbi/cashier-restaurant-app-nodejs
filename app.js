@@ -3,10 +3,14 @@ const bodyParser = require('body-parser')
 const db = require("./src/config/db")
 const morgan = require('morgan')
 
+var cors = require('cors')
+
 const routes = require("./src/main")
 
 
 const app = express()
+
+app.use(cors())
 
 
 app.use(bodyParser.urlencoded({extended: false}))
