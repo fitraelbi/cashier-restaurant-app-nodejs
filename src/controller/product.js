@@ -1,42 +1,74 @@
 
 const model = require("../model/product")
+const result = require("../helper/respon")
 const Product = {}
 
 Product.all = async (req, res) => {
     try {
         const data = await model.GetAll()
-        return res.status(200).json(data)
+        return result(res, 200, data)
     } catch (error) {
-        return res.status(500).json(error)
+        return result(res, 500, error)
     }
 }
 
-Product.add = (req, res) => {
-    console.log(req.body)
-    const { name, price, category, image } = req.body
-    
-    const data = model.Add(name, price, category, image)
-    return res.send(data)
+Product.add = async (req, res) => {
+    try{
+        const { name, price, category, image } = req.body
+
+        const datas = {
+            name : name,
+            price : price,
+            category : category,
+            image : image
+        }
+
+        const data = await model.Add(name, price, category, image)
+
+        return result(res, 201, datas)
+    }catch(error){
+        return result(res, 500, error)
+    }
 }
 
-Product.edit = (req, res) => {
-    const { id, name, price, category, image } = req.body
-    console.log(category)
-    let id_category = 0
-    category == 'drink' ? id_category = 1 : 
-    category == 'cake' ? id_category = 2 :
-    category == 'food' ? id_category = 3 : id_category = 0 
-    
-    const data = model.Edit(id, name, price, id_category, image)
-    
-    return res.send(data)
+Product.edit = async (req, res) => {
+
+    try {
+        const { id, name, price, category, image } = req.body
+        
+        let id_category = 0
+        category == 'drink' ? id_category = 1 : 
+        category == 'cake' ? id_category = 2 :
+        category == 'food' ? id_category = 3 : id_category = 0 
+        
+        const datas = {
+            id : id,
+            name : name,
+            price : price,
+            category : category,
+            image : image
+        }
+        
+        const data = await model.Edit(id, name, price, id_category, image)
+        
+        return result(res, 202, datas)
+
+    } catch (error) {
+        return result(res, 500, error)
+    }
 }
 
-Product.delete = (req, res) => {
-    const { id } = req.body
-    console.log(req.body)
-    //const data = model.Delete(id)
-    //return res.send(data)
+Product.delete = async (req, res) => {
+    try {
+        const id = req.query.id
+        dataDelete = await model.dataId(id)
+
+        const data = await model.Delete(id)
+
+        return result(res, 203, dataDelete)
+    } catch (error) {
+        return result(res, 500, error)
+    } 
 }
 
 Product.search = async (req, res) => {
@@ -44,45 +76,45 @@ Product.search = async (req, res) => {
     const name = req.query.name
     try {
         const data = await model.Search(name)
-        return res.status(200).json(data) 
+        return result(res, 200, data) 
     } catch (error) {
-        return res.status(500).json(error)
+        return result(res, 500, error)
     }
 }
 
 Product.orderbyname = async (req, res) => {
     try {
         const data = await model.ByName()
-        return res.status(200).json(data) 
+        return result(res, 200, data) 
     } catch (error) {
-        return res.status(500).json(error)
+        return result(res, 500, error)
     }
 }
 
 Product.orderbycategory = async (req, res) => {
     try {
         const data = await model.ByCategory()
-        return res.status(200).json(data) 
+        return result(res, 200, data)
     } catch (error) {
-        return res.status(500).json(error)
+        return result(res, 500, error)
     }
 }
 
 Product.orderbynew = async (req, res) => {
     try {
         const data = await model.ByNew()
-        return res.status(200).json(data) 
+        return result(res, 200, data) 
     } catch (error) {
-        return res.status(500).json(error)
+        return result(res, 500, error)
     }
 }
 
 Product.orderbyprice = async (req, res) => {
     try {
         const data = await model.ByPrice()
-        return res.status(200).json(data) 
+        return result(res, 200, data)
     } catch (error) {
-        return res.status(500).json(error)
+        return result(res, 500, error)
     }
 }
 

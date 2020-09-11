@@ -14,6 +14,19 @@ Product.GetAll = () => {
     })
 }
 
+Product.dataId = (id) => {
+    return new Promise((resolve, reject) => {
+        database
+            .query(`SELECT	product.id, product.name, product.price, category.name AS category, product.image FROM product INNER JOIN category ON product.id_category = category.id WHERE  product.id = ${id};`)
+            .then((res) => {
+                resolve(res.rows)
+            })
+            .catch((err) => {
+                reject(err)
+            })
+    })
+}
+
 Product.Add = (name, price, category, image) => {
     let id_category = 0
     category == 'drink' ? id_category = 1 : 
