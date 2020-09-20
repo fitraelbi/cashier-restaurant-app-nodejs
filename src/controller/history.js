@@ -1,4 +1,5 @@
 const model = require("../model/history")
+const result = require("../helper/respon")
 const history = {}
 
 history.all = async (req, res) => {
@@ -11,10 +12,17 @@ history.all = async (req, res) => {
 }
 
 history.add = (req, res) => {
-    const { invoices, cashier, orders, total } = req.body
-    const data = model.Add( invoices, cashier,  orders, total )
-    return res.send(data)
+    try {
+        
+        const { invoices, cashier, orders, total } = req.body
+        const data = model.Add( invoices, cashier,  orders, total )
+        return res.send(result(res, 201, data))
+    } 
+     catch (error) {
+        return res.send(result(res, 500, error))
+    }
 }
+
 
 history.edit = (req, res) => {
     const { invoices, cashier,  orders, total } = req.body

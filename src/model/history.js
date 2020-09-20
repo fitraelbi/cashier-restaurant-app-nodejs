@@ -16,10 +16,10 @@ history.GetAll = () => {
 }
 
 history.Add = (invoices, cashier,  orders, total) => {
-   
     database
         .query(`INSERT INTO history (invoices, cashier, date, orders, total) VALUES ('${invoices}', '${cashier}', current_timestamp, '${orders}', ${total});`)
         .then((res) => {
+            resolve(res.rows)
             console.log("Data berhasil ditambahkan") 
         })
         .catch((err) => {
