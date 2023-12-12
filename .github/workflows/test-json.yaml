@@ -1,8 +1,8 @@
-name: Security scanning
+name: json
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
 jobs:
   scanning:
@@ -17,7 +17,6 @@ jobs:
         with:
           scan-type: 'fs'
           ignore-unfixed: true
-          severity: 'CRITICAL, HIGH'
           format: json
           output: 'trivy-report.json'
       
