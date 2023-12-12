@@ -1,0 +1,27 @@
+name: Security scanning
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+jobs:
+  scanning:
+    name: Scanning
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Trivy vulnerability scanner 
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          ignore-unfixed: true
+          severity: 'CRITICAL, HIGH'
+          format: json
+          output: 'trivy-report.json'
+      
+      - uses: actions/upload-artifact@v3
+        with:
+          name: security-artifact
+          path: trivy-report.json
