@@ -1,4 +1,4 @@
-name: trivy
+name: test
 on:
   push:
     branches:
